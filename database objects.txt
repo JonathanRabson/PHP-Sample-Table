@@ -1,0 +1,19 @@
+--This creates a database with a simple table used in the example.
+
+create database inventory;
+
+CREATE TABLE users (
+	users_pk int not null auto_increment primary key,
+        users_lastname varchar(100),
+        users_middlename varchar(50) null,
+        users_firstname varchar(100),
+        users_modified timestamp default current_timestamp on update current_timestamp,
+        users_created timestamp
+) engine=INNODB;
+
+CREATE TRIGGER users_on_insert BEFORE INSERT
+ON users
+FOR EACH ROW
+SET NEW.users_created = CURRENT_TIMESTAMP;
+
+insert into users(users_firstname, users_lastname) values ('Herman','Baderman');
